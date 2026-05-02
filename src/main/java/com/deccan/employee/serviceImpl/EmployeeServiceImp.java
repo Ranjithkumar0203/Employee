@@ -5,6 +5,7 @@ import com.deccan.employee.dao.EmployeRepo;
 import com.deccan.employee.entity.Employee;
 import com.deccan.employee.model.Address;
 import com.deccan.employee.model.EmployeeDTO;
+import com.deccan.employee.model.EmployeeWithAddressDTO;
 import com.deccan.employee.service.EmployeeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,16 @@ public class EmployeeServiceImp implements EmployeeService {
             savedEmployeeDTO.setAddresses(addressClient.saveAddress(address));
         }
         return savedEmployeeDTO;
+    }
+
+    @Override
+    public EmployeeWithAddressDTO getEmployeeWithAddresses(Long employeeId) {
+        Employee employee = employeRepo.findById(employeeId)
+                .orElseThrow(() -> new RuntimeException("Employee not found with id: " + employeeId));
+
+        EmployeeWithAddressDTO employeeWithAddressDTO = modelMapper.map(employee, EmployeeWithAddressDTO.class);
+        employeeWithAddressDTO.setAddresses(addressClient.getAddressesByEmployeeID(String.valueOf(employeeId)));
+        return employeeWithAddressDTO;
     }
     
 }
