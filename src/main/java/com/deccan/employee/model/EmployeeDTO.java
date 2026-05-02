@@ -2,13 +2,25 @@ package com.deccan.employee.model;
 
 
 
-
 public class EmployeeDTO {
     private Long id;
     private String name;
     private String email;
+    private Address addresses;
     public Long getId() {
         return id;
+    }
+    public EmployeeDTO(Long id, String name, String email, Address addresses) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.addresses = addresses;
+    }
+    public Address getAddresses() {
+        return addresses;
+    }
+    public void setAddresses(Address addresses) {
+        this.addresses = addresses;
     }
     public void setId(Long id) {
         this.id = id;

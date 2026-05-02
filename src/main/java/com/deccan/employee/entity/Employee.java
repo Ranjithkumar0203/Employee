@@ -1,6 +1,11 @@
 package com.deccan.employee.entity;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.deccan.employee.model.Address;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,6 +23,19 @@ public class Employee {
     private Long id;
     private String name;
     private String email;
+    private Address addresses;
+    public Employee(Long id, String name, String email, Address addresses) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.addresses = addresses;
+    }
+    public Address getAddresses() {
+        return addresses;
+    }
+    public void setAddresses(Address addresses) {
+        this.addresses = addresses;
+    }
     public Long getId() {
         return id;
     }
