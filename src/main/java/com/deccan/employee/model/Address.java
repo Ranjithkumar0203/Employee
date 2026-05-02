@@ -5,10 +5,20 @@ package com.deccan.employee.model;
 
 
 public class Address {
+    private String id;
     private String city;
     private String pincode;
     private String address;
     private String phoneNumber;
+    private String employeeID;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getCity() {
         return city;
@@ -40,6 +50,23 @@ public class Address {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmployeeID() {
+        return employeeID;
+    }
+
+    public void setEmployeeID(String employeeID) {
+        this.employeeID = employeeID;
+    }
+
+    public Address(String id, String city, String pincode, String address, String phoneNumber, String employeeID) {
+        this.id = id;
+        this.city = city;
+        this.pincode = pincode;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.employeeID = employeeID;
     }
 
     public Address(String city, String pincode, String address, String phoneNumber) {

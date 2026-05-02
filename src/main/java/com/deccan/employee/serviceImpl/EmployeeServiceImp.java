@@ -1,7 +1,9 @@
 package com.deccan.employee.serviceImpl;
 
+import com.deccan.employee.client.AddressClient;
 import com.deccan.employee.dao.EmployeRepo;
 import com.deccan.employee.entity.Employee;
+import com.deccan.employee.model.Address;
 import com.deccan.employee.model.EmployeeDTO;
 import com.deccan.employee.service.EmployeeService;
 import org.modelmapper.ModelMapper;
@@ -11,10 +13,12 @@ import org.springframework.stereotype.Service;
 public class EmployeeServiceImp implements EmployeeService {
     private final EmployeRepo employeRepo;
     private final ModelMapper modelMapper;
+    private final AddressClient addressClient;
 
-    public EmployeeServiceImp(EmployeRepo employeRepo, ModelMapper modelMapper) {
+    public EmployeeServiceImp(EmployeRepo employeRepo, ModelMapper modelMapper, AddressClient addressClient) {
         this.employeRepo = employeRepo;
         this.modelMapper = modelMapper;
+        this.addressClient = addressClient;
     }
 
     @Override
@@ -25,7 +29,13 @@ public class EmployeeServiceImp implements EmployeeService {
             employeeEntity.setId(null);
         }
         Employee savedEmployee = employeRepo.save(employeeEntity);
-        return modelMapper.map(savedEmployee, EmployeeDTO.class);
+        EmployeeDTO savedEmployeeDTO = modelMapper.map(savedEmployee, EmployeeDTO.class);
+        Address address = employeeDTO.getAddresses();
+        if (address != null) {
+            address.setEmployeeID(String.valueOf(savedEmployee.getId()));
+            savedEmployeeDTO.setAddresses(addressClient.saveAddress(address));
+        }
+        return savedEmployeeDTO;
     }
     
 }
