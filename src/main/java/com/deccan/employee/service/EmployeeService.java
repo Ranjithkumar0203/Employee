@@ -8,5 +8,7 @@ public interface EmployeeService {
     EmployeeDTO saveEmployee (EmployeeDTO employeeDTO);
 
     EmployeeWithAddressDTO getEmployeeWithAddresses(Long employeeId);
+
+    EmployeeDTO getEmployeeWithID(Long id);
     
 } 

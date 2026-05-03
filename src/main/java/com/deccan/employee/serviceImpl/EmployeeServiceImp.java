@@ -48,5 +48,14 @@ public class EmployeeServiceImp implements EmployeeService {
         employeeWithAddressDTO.setAddresses(addressClient.getAddressesByEmployeeID(String.valueOf(employeeId)));
         return employeeWithAddressDTO;
     }
+
+    @Override
+    public EmployeeDTO getEmployeeWithID(Long id) {
+
+       Employee employee =  employeRepo.findById(id).orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
+       EmployeeDTO employeeDTO = modelMapper.map(employee, EmployeeDTO.class);
+       return employeeDTO;
+       
+    }
     
 }
