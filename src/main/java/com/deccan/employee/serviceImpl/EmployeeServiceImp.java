@@ -1,6 +1,7 @@
 package com.deccan.employee.serviceImpl;
 
 import com.deccan.employee.client.AddressClient;
+import com.deccan.employee.client.WorkLocationClientClient;
 import com.deccan.employee.dao.EmployeRepo;
 import com.deccan.employee.entity.Employee;
 import com.deccan.common.exception.AddressServiceException;
@@ -9,6 +10,7 @@ import com.deccan.common.exception.EmployeeSaveException;
 import com.deccan.employee.model.Address;
 import com.deccan.employee.model.EmployeeDTO;
 import com.deccan.employee.model.EmployeeWithAddressDTO;
+import com.deccan.employee.model.WorkLocation;
 import com.deccan.employee.service.EmployeeService;
 import feign.FeignException;
 import org.modelmapper.ModelMapper;
@@ -19,11 +21,13 @@ public class EmployeeServiceImp implements EmployeeService {
     private final EmployeRepo employeRepo;
     private final ModelMapper modelMapper;
     private final AddressClient addressClient;
+    private final WorkLocationClientClient workLocationClientClient;
 
-    public EmployeeServiceImp(EmployeRepo employeRepo, ModelMapper modelMapper, AddressClient addressClient) {
+    public EmployeeServiceImp(EmployeRepo employeRepo, ModelMapper modelMapper, AddressClient addressClient,  WorkLocationClientClient workLocationClientClient) {
         this.employeRepo = employeRepo;
         this.modelMapper = modelMapper;
         this.addressClient = addressClient;
+        this.workLocationClientClient = workLocationClientClient;
     }
 
     @Override
@@ -47,6 +51,15 @@ public class EmployeeServiceImp implements EmployeeService {
                 savedEmployeeDTO.setAddresses(addressClient.saveAddress(address));
             } catch (FeignException ex) {
                 throw new AddressServiceException("Unable to save address because address service is not available", ex);
+            }
+        }
+          WorkLocation workLocation = employeeDTO.getWorkLocation();
+        if (workLocation != null) {
+            
+            try {
+                savedEmployeeDTO.setWorkLocation(workLocationClientClient.saveWorkLocation(workLocation));
+            } catch (FeignException ex) {
+                throw new RuntimeException("Unable to save Location because Location service is not available", ex);
             }
         }
         return savedEmployeeDTO;

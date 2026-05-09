@@ -7,14 +7,23 @@ public class EmployeeDTO {
     private String name;
     private String email;
     private Address addresses;
-    public Long getId() {
-        return id;
-    }
-    public EmployeeDTO(Long id, String name, String email, Address addresses) {
+    private WorkLocation workLocation;
+    public EmployeeDTO(Long id, String name, String email, Address addresses, WorkLocation workLocation) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.addresses = addresses;
+        this.workLocation = workLocation;
+    }
+    public Long getId() {
+        return id;
+    }
+   
+    public WorkLocation getWorkLocation() {
+        return workLocation;
+    }
+    public void setWorkLocation(WorkLocation workLocation) {
+        this.workLocation = workLocation;
     }
     public Address getAddresses() {
         return addresses;
