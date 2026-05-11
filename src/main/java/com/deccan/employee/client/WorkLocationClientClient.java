@@ -7,7 +7,7 @@ import com.deccan.employee.model.WorkLocation;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
-@FeignClient(name = "workLocation-service", url = "${workLocation.service.url}")
+@FeignClient(name = "worklocation")
 public interface WorkLocationClientClient {
     @PostMapping("/worklocation/save")
     public WorkLocation saveWorkLocation(@RequestBody WorkLocation WorkLocation);

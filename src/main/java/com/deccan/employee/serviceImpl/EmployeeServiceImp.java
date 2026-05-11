@@ -55,7 +55,7 @@ public class EmployeeServiceImp implements EmployeeService {
         }
           WorkLocation workLocation = employeeDTO.getWorkLocation();
         if (workLocation != null) {
-            
+            workLocation.setEmployeeId(String.valueOf(savedEmployee.getId()));
             try {
                 savedEmployeeDTO.setWorkLocation(workLocationClientClient.saveWorkLocation(workLocation));
             } catch (FeignException ex) {
