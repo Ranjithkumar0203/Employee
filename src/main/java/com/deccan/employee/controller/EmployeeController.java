@@ -1,9 +1,5 @@
 package com.deccan.employee.controller;
 
-import java.util.List;
-
-import com.deccan.employee.client.AddressClient;
-import com.deccan.employee.model.Address;
 import com.deccan.employee.model.EmployeeDTO;
 import com.deccan.employee.model.EmployeeWithAddressDTO;
 import com.deccan.employee.service.EmployeeService;
@@ -23,8 +19,6 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
-    @Autowired
-    AddressClient addressClient;
 
     @GetMapping("/")
     public String hello(){
@@ -43,10 +37,7 @@ public class EmployeeController {
 
     @GetMapping("/{id}/with-addresses")
     public EmployeeWithAddressDTO getEmployeeWithAddresses(@PathVariable Long id) {
-
-        EmployeeDTO employeeDTO = employeeService.getEmployeeWithID(id);
-        List<Address> addresses = addressClient.getAddressesByEmployeeID(String.valueOf(id));
-        return new EmployeeWithAddressDTO(employeeDTO.getId(), employeeDTO.getName(), employeeDTO.getEmail(), addresses);
+        return employeeService.getEmployeeWithAddresses(id);
     }
 
      @GetMapping("/{id}")
